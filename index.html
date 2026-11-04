@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Queue Simulator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Queue Simulator</h1>
+    <p class="sub">First In, First Out (FIFO)</p>
+
+    <div class="controls">
+      <input type="text" id="valueInput" placeholder="Enter a value" autocomplete="off">
+      <button id="enqueueBtn">Enqueue</button>
+      <button id="dequeueBtn">Dequeue</button>
+      <button id="peekBtn">Peek</button>
+      <button id="clearBtn" class="ghost">Clear</button>
+    </div>
+
+    <p id="message" role="status"></p>
+
+    <section>
+      <h2>Queue</h2>
+      <div class="ends">
+        <span>Front (dequeue here)</span>
+        <span>Rear (enqueue here)</span>
+      </div>
+      <div id="queue" class="queue"></div>
+    </section>
+
+    <section>
+      <h2>Deleted</h2>
+      <div id="deleted" class="deleted"></div>
+    </section>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
