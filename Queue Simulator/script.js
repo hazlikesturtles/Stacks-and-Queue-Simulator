@@ -1,8 +1,8 @@
 class Queue {
   constructor() { this.items = []; }
-  enqueue(value) { this.items.push(value); }   // add at the REAR
-  dequeue() { return this.items.shift(); }     // remove from the FRONT (earliest value)
-  peek() { return this.items[0]; }             // inspect the FRONT
+  enqueue(value) { this.items.push(value); }  
+  dequeue() { return this.items.shift(); }     
+  peek() { return this.items[0]; }             
   clear() { this.items = []; }
   isEmpty() { return this.items.length === 0; }
 }
@@ -13,10 +13,11 @@ $(function () {
   const $queue = $("#queue");
   const $deleted = $("#deleted");
   const $msg = $("#message");
+  let peeked = false;   
 
   function say(text) { $msg.text(text || ""); }
 
-  function render(highlightFront) {
+  function render() {
     $queue.empty();
     const last = queue.items.length - 1;
     queue.items.forEach(function (value, i) {
@@ -25,7 +26,7 @@ $(function () {
       if (i === 0) tags.push("Front");
       if (i === last) tags.push("Rear");
       if (tags.length) $b.append($("<span>").addClass("tag").text(tags.join(" / ")));
-      if (i === 0 && highlightFront) $b.addClass("highlight");
+      if (i === 0 && peeked) $b.addClass("highlight");
       $queue.append($b);
     });
   }
@@ -36,29 +37,31 @@ $(function () {
     queue.enqueue(value);
     $input.val("").focus();
     say("");
-    render(false);
+    render();
   }
 
   function dequeue() {
     if (queue.isEmpty()) { say("The queue is empty. Nothing to dequeue."); return; }
     const value = queue.dequeue();
     $deleted.append($("<div>").addClass("block").text(value));
+    peeked = false;      
     say("");
-    render(false);
+    render();
   }
 
   function peek() {
     if (queue.isEmpty()) { say("The queue is empty. Nothing to peek."); return; }
     say("");
-    render(true);
-    setTimeout(function () { render(false); }, 1500);
+    peeked = true;      
+    render();
   }
 
   function clearAll() {
     queue.clear();
     $deleted.empty();
+    peeked = false;
     say("");
-    render(false);
+    render();
   }
 
   $("#enqueueBtn").on("click", enqueue);
@@ -67,5 +70,5 @@ $(function () {
   $("#clearBtn").on("click", clearAll);
   $input.on("keydown", function (e) { if (e.key === "Enter") enqueue(); });
 
-  render(false);
+  render();
 });
